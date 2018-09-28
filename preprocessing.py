@@ -67,7 +67,7 @@ def preprocess():
 
     train_set = study_label_create(train_set)
     valid_set = study_label_create(valid_set)
-
+    valid_set.columns = ['paths','label_string','label']
     train_path_df = train_set[train_set.Study_type == 'params.study_type']
     valid_path_df = valid_set[valid_set.Study_type == 'params.study_type']
 
