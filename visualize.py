@@ -18,7 +18,8 @@ def imshow(axis, inp):
 
 print(params.epoch)
 print(params.study_type)
-imgview, label,Id = next(iter(preprocessing.preprocess()[1]))
+trainDL,validDL = preprocessing.preprocess()
+imgview, label,Id = next(iter(validDL))
 #print(img, label.size())
 fig = plt.figure(1, figsize=(16, 8))
 grid = ImageGrid(fig, 111, nrows_ncols=(5, 8), axes_pad=0.05)  
