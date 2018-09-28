@@ -1,6 +1,7 @@
 import preprocessing 
 import numpy as np
 import matplotlib.pyplot as plt
+from torch.utils.data import DataLoader, Dataset
 import params
 
 from mpl_toolkits.axes_grid1 import AxesGrid, ImageGrid
@@ -18,8 +19,10 @@ def imshow(axis, inp):
 
 print(params.epoch)
 print(params.study_type)
-trainDL,validDL = preprocessing.preprocess()
-imgview, label,Id = next(iter(validDL))
+transformed_train_dataset,transformed_valid_dataset = preprocessing.preprocess()
+transformed_train_dl = DataLoader(transformed_train_dataset,batch_size=params.batch_size,shuffle=True)
+transformed_valid_dl = DataLoader(transformed_valid_dataset,batch_size=params.batch_size,shuffle=True)
+imgview, label,Id = next(iter(transformed_valid_dl))
 #print(img, label.size())
 fig = plt.figure(1, figsize=(16, 8))
 grid = ImageGrid(fig, 111, nrows_ncols=(5, 8), axes_pad=0.05)  
