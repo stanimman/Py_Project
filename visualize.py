@@ -16,7 +16,7 @@ def imshow(axis, inp):
     axis.imshow(inp)
 
 
-imgview, label,Id = next(iter(preprocessing.preprocess()[1])))
+imgview, label,Id = next(iter(preprocessing.preprocess()[1]))
 #print(img, label.size())
 fig = plt.figure(1, figsize=(16, 8))
 grid = ImageGrid(fig, 111, nrows_ncols=(5, 8), axes_pad=0.05)  
