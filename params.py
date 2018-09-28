@@ -1,5 +1,6 @@
 # param file - Holds all hyper parameters
 
+inpath = 'XR_FOREARM'
 batch_size = 40
 epoch = 25
 lr = 1e-4
