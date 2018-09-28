@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader, Dataset
 import pandas as pd
 import cv2
 import params
+from params import inpath
 
 def study_label_create(df) :
       #df['label'] = 0
