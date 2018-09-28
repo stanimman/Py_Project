@@ -60,8 +60,8 @@ class MuraImageDataset(Dataset):
 
 def preprocess():
 
-    train_set = pd.read_csv(os.path.join(params.inpath,'train_lmagepath_label.csv'))
-    valid_set = pd.read_csv(os.path.join(params.inpath,'valid_imagepath_label.csv'))
+    train_set = pd.read_csv('XR_FOREARM/train_lmagepath_label.csv'))
+    valid_set = pd.read_csv('XR_FOREARM/valid_imagepath_label.csv'))
     #train_set.columns = ['Path']
     #valid_set.columns = ['Path']
 
