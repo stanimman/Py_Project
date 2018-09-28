@@ -16,38 +16,25 @@ from skimage import io, transform
 import matplotlib.pyplot as plt
 from PIL import Image
 import cv2
-import pandas as pd 
+import pandas as pd
+import params
 
-def preprocess()
-
-
-	train_set = pd.read_csv('MURA-v1.1/train_image_paths.csv',header=None)
-	valid_set = pd.read_csv('MURA-v1.1/valid_image_paths.csv',header=None)
-	train_set.columns = ['Path']
-	valid_set.columns = ['Path']
-
-	def study_label_create(df) : 
-	  df['label'] = 0 
-	  df.loc[(df.Path.apply(lambda x: x.find('positive')) > 0 ),['label']] = 1
+def study_label_create(df) : 
+	  #df['label'] = 0 
+	  #df.loc[(df.Path.apply(lambda x: x.find('positive')) > 0 ),['label']] = 1
 	  df['Unique_Id'] = df.index
 	  df['Study_type'] = ''
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_SHOULDER')) > 0 ),['Study_type']] = 'XR_SHOULDER'
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_FINGER')) > 0 ),['Study_type']] = 'XR_FINGER'
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_FOREARM')) > 0 ),['Study_type']] = 'XR_FOREARM'
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_HAND')) > 0 ),['Study_type']] = 'XR_HAND'
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_HUMERUS')) > 0 ),['Study_type']] = 'XR_HUMERUS'
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_WRIST')) > 0 ),['Study_type']] = 'XR_WRIST'
-	  df.loc[(df.Path.apply(lambda x: x.find('XR_ELBOW')) > 0 ),['Study_type']] = 'XR_ELBOW'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_SHOULDER')) > 0 ),['Study_type']] = 'XR_SHOULDER'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_FINGER')) > 0 ),['Study_type']] = 'XR_FINGER'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_FOREARM')) > 0 ),['Study_type']] = 'XR_FOREARM'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_HAND')) > 0 ),['Study_type']] = 'XR_HAND'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_HUMERUS')) > 0 ),['Study_type']] = 'XR_HUMERUS'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_WRIST')) > 0 ),['Study_type']] = 'XR_WRIST'
+	  df.loc[(df.paths.apply(lambda x: x.find('XR_ELBOW')) > 0 ),['Study_type']] = 'XR_ELBOW'
 
 	  return df
 
-	train_set = study_label_create(train_set)
-	valid_set = study_label_create(valid_set)
-
-	train_path_df = train_set[train_set.Study_type == 'params.study_type']
-	valid_path_df = valid_set[valid_set.Study_type == 'params.study_type']
-
-	class MuraImageDataset(Dataset):
+class MuraImageDataset(Dataset):
 		"""Mura dataset."""
 		def __init__(self, df, root_dir, transform=None):
 			"""
@@ -79,6 +66,27 @@ def preprocess()
 			if self.transform:
 				image = self.transform(image)
 			return [image, labels,Id]
+def preprocess() :
+
+	train_set = pd.read_csv(os.path.join(params.inpath,'train_lmagepath_label.csv'))
+	valid_set = pd.read_csv(os.path.join(params.inpath,'valid_imagepath_label.csv'))
+	#train_set.columns = ['Path']
+	#valid_set.columns = ['Path']
+
+	train_set = study_label_create(train_set)
+	valid_set = study_label_create(valid_set)
+
+	train_path_df = train_set[train_set.Study_type == 'params.study_type']
+	valid_path_df = valid_set[valid_set.Study_type == 'params.study_type']
+	
+	train_path_df['New_path'] = train_path_df.paths.apply(lambda x: x.replace("MURA-v1.1","XR_FOREARM"))
+	valid_path_df['New_path'] = valid_path_df.paths.apply(lambda x: x.replace("MURA-v1.1","XR_FOREARM"))
+	
+	train_path_df =train_path_df[['New_path','label_string','label','Unique_Id','Study_type']]
+	valid_path_df =valid_path_df[['New_path','label_string','label','Unique_Id','Study_type']]
+
+
+	
 			
 	transformed_train_dataset = MuraImageDataset(df=train_path_df,
 										root_dir='/content',
