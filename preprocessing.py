@@ -1,22 +1,12 @@
 # Another tedious job in computer vision task - need to preprocess the data and load in data loader - Preprocessing
-
+import os
 import PIL
 print(PIL.PILLOW_VERSION)
-import torch 
-import torchvision
-import torch.nn as nn
 import numpy as np
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Dataset
-from torchvision.datasets.folder import pil_loader
-from torchvision import transforms, utils
 import pandas as pd
-import matplotlib.pyplot as plt
-from skimage import io, transform
-import matplotlib.pyplot as plt
-from PIL import Image
 import cv2
-import pandas as pd
 import params
 
 def study_label_create(df) : 
@@ -66,7 +56,8 @@ class MuraImageDataset(Dataset):
 			if self.transform:
 				image = self.transform(image)
 			return [image, labels,Id]
-def preprocess() :
+        
+def preprocess():
 
 	train_set = pd.read_csv(os.path.join(params.inpath,'train_lmagepath_label.csv'))
 	valid_set = pd.read_csv(os.path.join(params.inpath,'valid_imagepath_label.csv'))
@@ -116,5 +107,9 @@ def preprocess() :
 
 	transformed_train_dl = DataLoader(transformed_train_dataset,batch_size=params.batch_size,shuffle=True)
 	transformed_valid_dl = DataLoader(transformed_valid_dataset,batch_size=params.batch_size,shuffle=True)
+    	return [transformed_train_dl,transformed_valid_dl]
 	
-return transformed_train_dl,transformed_valid_dl
+    
+
+
+
