@@ -15,14 +15,14 @@ def imshow(axis, inp):
     inp = np.clip(inp, 0, 1)
     axis.imshow(inp)
 
-def showimg():
-    imgview, label,Id = next(iter(preprocessing.preprocess()[1]))
-    #print(img, label.size())
-    fig = plt.figure(1, figsize=(16, 8))
-    grid = ImageGrid(fig, 111, nrows_ncols=(5, 8), axes_pad=0.05)  
-    for i in range(imgview.size()[0]):
-      #print(img)
-      ax = grid[i]
-      print(imgview.shape)
-      imshow(ax,imgview[i])
+
+imgview, label,Id = next(iter(preprocessing.preprocess()[1])))
+#print(img, label.size())
+fig = plt.figure(1, figsize=(16, 8))
+grid = ImageGrid(fig, 111, nrows_ncols=(5, 8), axes_pad=0.05)  
+for i in range(imgview.size()[0]):
+  #print(img)
+  ax = grid[i]
+  print(imgview.shape)
+  imshow(ax,imgview[i])
   
