@@ -1,6 +1,7 @@
 import preprocessing 
 import numpy as np
 import matplotlib.pyplot as plt
+import params
 
 from mpl_toolkits.axes_grid1 import AxesGrid, ImageGrid
 
@@ -15,7 +16,7 @@ def imshow(axis, inp):
     inp = np.clip(inp, 0, 1)
     axis.imshow(inp)
 
-
+print(params.epoch)
 imgview, label,Id = next(iter(preprocessing.preprocess()[1]))
 #print(img, label.size())
 fig = plt.figure(1, figsize=(16, 8))
