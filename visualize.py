@@ -17,6 +17,7 @@ def imshow(axis, inp):
     axis.imshow(inp)
 
 print(params.epoch)
+print(params.study_type)
 imgview, label,Id = next(iter(preprocessing.preprocess()[1]))
 #print(img, label.size())
 fig = plt.figure(1, figsize=(16, 8))
