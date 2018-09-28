@@ -109,6 +109,6 @@ def preprocess():
 
     transformed_train_dl = DataLoader(transformed_train_dataset,batch_size=params.batch_size,shuffle=True)
     transformed_valid_dl = DataLoader(transformed_valid_dataset,batch_size=params.batch_size,shuffle=True)
-    return [transformed_train_dl,transformed_valid_dl]
+    return transformed_train_dl,transformed_valid_dl
 
 
